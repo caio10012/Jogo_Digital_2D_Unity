@@ -14,6 +14,9 @@ public class Health : MonoBehaviour
     [SerializeField] private int numberOfflashes;
     private SpriteRenderer spriteRend;
 
+    [Header ("Component")]
+    [SerializeField] private Behaviour[] components;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,7 +47,14 @@ public class Health : MonoBehaviour
             if (!dead)
             {
                 anim.SetTrigger("die");
-                GetComponent<PlayerMoverment>().enabled = false;
+
+               
+
+                foreach (Behaviour component in components)
+                {
+                    component.enabled = false;
+                }
+
                 dead = true;
             }
             
@@ -67,6 +77,10 @@ public class Health : MonoBehaviour
             yield return new WaitForSeconds(iframesDuration / (numberOfflashes * 2));
         }
         Physics2D.IgnoreLayerCollision(10, 11, false);
+    }
+    private void Deactivate()
+    {
+        gameObject.SetActive(false);
     }
 
 }
