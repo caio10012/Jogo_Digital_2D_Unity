@@ -71,6 +71,34 @@ public class Health : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
     }
 
+    public void Respawn()
+    {
+        dead = false;
+        AddHealth(startingHealth);
+        anim.ResetTrigger("die");
+        anim.Play("idle");
+        StartCoroutine(Invulnerability());
+
+        foreach (Behaviour component in components)
+        {
+            component.enabled = true;
+        }
+    }
+
+    // new enemy respawn
+    public void EnemyRespawn()
+    {
+        dead = false;
+        AddHealth(startingHealth);
+        anim.ResetTrigger("Die");
+        anim.Play("Idle");
+
+        foreach (Behaviour component in components)
+        {
+            component.enabled = true;
+        }
+    }
+
     private IEnumerator Invulnerability()
     {
         Physics2D.IgnoreLayerCollision(10, 11, true);
@@ -83,6 +111,9 @@ public class Health : MonoBehaviour
         }
         Physics2D.IgnoreLayerCollision(10, 11, false);
     }
+
+
+
     private void Deactivate()
     {
         gameObject.SetActive(false);
