@@ -17,6 +17,10 @@ public class Health : MonoBehaviour
     [Header ("Component")]
     [SerializeField] private Behaviour[] components;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip hurtSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -40,22 +44,23 @@ public class Health : MonoBehaviour
             anim.SetTrigger("hurt");
             //iframes
             StartCoroutine(Invulnerability());
+            SoundManager.instance.PlaySound(hurtSound);
         }
         else
         {
             // player foi de base
             if (!dead)
             {
-                anim.SetTrigger("die");
-
-               
-
+           
                 foreach (Behaviour component in components)
                 {
                     component.enabled = false;
                 }
+                anim.SetBool("grounded", true);
+                anim.SetTrigger("die");
 
                 dead = true;
+                SoundManager.instance.PlaySound(deathSound);
             }
             
         }

@@ -11,6 +11,9 @@ public class Firetrap : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRend;
 
+    [Header("Firetrap Sound")]
+    [SerializeField] private AudioClip trapSound;
+
     private bool triggered; //when the trap gets triggered
     private bool active; //when the trap is active and can hurt the player
 
@@ -28,6 +31,7 @@ public class Firetrap : MonoBehaviour
         {
             if (!triggered)
                 StartCoroutine(ActivateFiretrap());
+               
 
             player = collision.GetComponent<Health>();
         }
@@ -51,6 +55,7 @@ public class Firetrap : MonoBehaviour
 
         //Wait for delay, activate trap, turn on animation, return color back to normal
         yield return new WaitForSeconds(activationDelay);
+        SoundManager.instance.PlaySound(trapSound);
         spriteRend.color = Color.white; //turn the sprite back to its initial color
         active = true;
         anim.SetBool("activated", true);

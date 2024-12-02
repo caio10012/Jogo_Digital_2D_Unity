@@ -7,6 +7,8 @@ public class ArrowTrap : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] arrows;
     private float cooldownTimer;
+    [Header ("SFX")]
+    [SerializeField] private AudioClip arrowSound;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,6 +20,8 @@ public class ArrowTrap : MonoBehaviour
     private void Atack()
     {
         cooldownTimer = 0;
+
+        SoundManager.instance.PlaySound(arrowSound);
 
         arrows[FindArrow()].transform.position = firePoint.position;
         arrows[FindArrow()].GetComponent<EnemyProjectile>().ActivateProjectile();

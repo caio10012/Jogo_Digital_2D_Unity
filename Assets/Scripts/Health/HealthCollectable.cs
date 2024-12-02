@@ -3,6 +3,7 @@ using UnityEngine;
 public class HealthCollectable : MonoBehaviour
 {
     [SerializeField] private float healthValue;
+    [SerializeField] private AudioClip healthSound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,6 +19,7 @@ public class HealthCollectable : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            SoundManager.instance.PlaySound(healthSound);
             collision.GetComponent<Health>().AddHealth(healthValue);
             gameObject.SetActive(false);
         }

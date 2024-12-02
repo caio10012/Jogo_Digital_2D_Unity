@@ -9,8 +9,25 @@ public class PlayerMoverment : MonoBehaviour
     private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask groundlayer;
     [SerializeField] private LayerMask wallLayer;
+
+    [Header("Coyote")]
+    [SerializeField] private float coyoteTime;
+    private float coyoteCounter;
+
+    [Header ("Mmultiple jump")]
+    [SerializeField] private int extraJumps;
+    private int jumpCounter;
+
+    [Header("wall jump")]
+    [SerializeField] private float wallJumpX;
+    [SerializeField] private float wallJumpY;
+
+
     private float wallJumpCooldown;
     private float horizontalInput;
+
+    [Header("SFX")]
+    [SerializeField] private AudioClip jumpSound;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,53 +57,81 @@ public class PlayerMoverment : MonoBehaviour
         anim.SetBool("run", horizontalInput != 0);
         anim.SetBool("grounded", isGrounded());
 
-        print(onWall());
-
-        // lógica do pulo na parede
-        if (wallJumpCooldown > 0.2f)
+        //Jump
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-            float currentSpeed = speed;
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-            {
-                currentSpeed *= 1.5f;
-            }
+            Jump();
+        }
 
-            body.linearVelocity = new Vector2(horizontalInput * currentSpeed, body.linearVelocity.y);
-            if (onWall() && !isGrounded())
-            {
-                body.gravityScale = 0;
-                body.linearVelocity = Vector2.zero;
-            }
-            else
-                body.gravityScale = 3;
-
-            if (Input.GetKey(KeyCode.Space))
-                Jump();
+        // jump height
+        if(Input.GetKeyUp(KeyCode.Space) && body.linearVelocity.y > 0)
+        {
+            body.linearVelocity = new Vector2(body.linearVelocity.x, body.linearVelocity.y / 2);
+        }
+        if(onWall())
+        {
+            body.gravityScale = 0;
+            body.linearVelocity = Vector2.zero;
         }
         else
-            wallJumpCooldown += Time.deltaTime;
+        {
+            body.gravityScale = 7;
+            body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y);
+
+            if(isGrounded())
+            {
+                coyoteCounter = coyoteTime;
+                jumpCounter = extraJumps;
+            }
+            else
+            {
+                coyoteCounter -= Time.deltaTime;
+            }
+        }
     }
+
 
     private void Jump()
     {
-        if (isGrounded())
+        if(coyoteCounter <= 0 && !onWall() && jumpCounter <= 0) return;
+        SoundManager.instance.PlaySound(jumpSound);
+
+        if (onWall())
+            WallJump();
+        else
         {
-            body.linearVelocity = new Vector2(body.linearVelocity.x, jumpForce);
-            Debug.Log("Pulo: " + body.linearVelocity.y);
-            anim.SetTrigger("jump");
-        }
-        else if (onWall() && !isGrounded())
-        {
-            if (horizontalInput == 0)
+            if (isGrounded())
             {
-                body.linearVelocity = new Vector2(-transform.localScale.x * 10, 0);
-                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                body.linearVelocity = new Vector2(body.linearVelocity.x, jumpForce);
             }
             else
-                body.linearVelocity = new Vector2(-transform.localScale.x * 3, 6);
-            wallJumpCooldown = 0;
+            {
+                if (coyoteCounter > 0)
+                    body.linearVelocity = new Vector2(body.linearVelocity.x, jumpForce);
+                else
+                {
+                    if (jumpCounter > 0)
+                    {
+                        body.linearVelocity = new Vector2(body.linearVelocity.x, jumpForce);
+                        jumpCounter--;
+                    }
+
+                }
+            }
+                coyoteCounter = 0;
+
+
         }
     }
+
+    private void WallJump()
+    {
+        body.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * wallJumpX, wallJumpY));
+        wallJumpCooldown = 0;
+    }
+
+
+
     private bool isGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundlayer);
