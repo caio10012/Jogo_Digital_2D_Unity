@@ -1,39 +1,34 @@
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    //Room Camera
+    // Room Camera
     [SerializeField] private float speed;
-    private float currentPosX;
     private Vector3 velocity = Vector3.zero;
 
-    //Follow the player
+    // Follow the player
     [SerializeField] private Transform player;
-    [SerializeField]private float aheadDistance;
+    [SerializeField] private float aheadDistance;
     [SerializeField] private float cameraSpeed;
     private float lookAhead;
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Room Camera
-        //transform.position = Vector3.SmoothDamp(transform.position, new Vector3(currentPosX, transform.position.y, transform.position.z),ref velocity, speed);
-
-        //Follow the player
-        transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
-        lookAhead = Mathf.Lerp(lookAhead, (aheadDistance * player.localScale.x),Time.deltaTime * cameraSpeed);
+        // Follow the player
+        Vector3 targetPosition = new Vector3(player.position.x + lookAhead, player.position.y, transform.position.z);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, speed);
+        lookAhead = Mathf.Lerp(lookAhead, (aheadDistance * player.localScale.x), Time.deltaTime * cameraSpeed);
     }
 
     public void MoveToNewRoom(Transform _newRoom)
     {
-        currentPosX = _newRoom.position.x;
+        Vector3 newPosition = new Vector3(_newRoom.position.x, _newRoom.position.y, transform.position.z);
+        transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, speed);
     }
 }
