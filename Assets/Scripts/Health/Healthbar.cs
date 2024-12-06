@@ -19,4 +19,6 @@ public class Healthbar : MonoBehaviour
     {
         currentHealthBar.fillAmount = playerHealth.currentHealth / 10;
     }
+    //Adicionando alguns comentarios pra testar entre o github e o sistema se versões do unity
 }
+    
