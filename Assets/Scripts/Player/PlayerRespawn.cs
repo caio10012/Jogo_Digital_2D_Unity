@@ -5,11 +5,13 @@ public class PlayerRespawn : MonoBehaviour
     [SerializeField] private AudioClip checkpointSound;
     private Transform currentCheckPoint;
     private Health playerHealth;
+    private UIManager uiManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerHealth = GetComponent<Health>();
+        uiManager = FindAnyObjectByType<UIManager>();
     }
 
     // Update is called once per frame
@@ -17,9 +19,15 @@ public class PlayerRespawn : MonoBehaviour
     {
        
     }
-    public void Respawn()
+    public void CheckRespawn()
     {
-       transform.position = currentCheckPoint.position;
+        //check if checkPoint available
+        if(currentCheckPoint == null)
+        {
+            uiManager.GameOver();
+            return;
+        }   
+        transform.position = currentCheckPoint.position;
        playerHealth.Respawn();
 
         Camera.main.GetComponent<CameraController>().MoveToNewRoom(currentCheckPoint.parent);
