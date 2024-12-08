@@ -21,6 +21,8 @@ public class Health : MonoBehaviour
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip hurtSound;
 
+   
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,7 +34,7 @@ public class Health : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public void TakeDamage(float _damage)
@@ -118,5 +120,7 @@ public class Health : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+ 
 
 }

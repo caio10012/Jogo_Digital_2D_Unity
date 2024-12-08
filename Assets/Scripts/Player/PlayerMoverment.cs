@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerMoverment : MonoBehaviour
 {
     private Rigidbody2D body;
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
     [SerializeField] private float jumpForce;
     private Animator anim;
     private BoxCollider2D boxCollider;
@@ -24,7 +24,7 @@ public class PlayerMoverment : MonoBehaviour
 
 
     private float wallJumpCooldown;
-    private float horizontalInput;
+    public float horizontalInput;
 
     [Header("SFX")]
     [SerializeField] private AudioClip jumpSound;
