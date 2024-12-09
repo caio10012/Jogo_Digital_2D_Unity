@@ -27109,6 +27109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06581948cc0f58d4cad0c390e363bde0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startMenu: {fileID: 0}
   gameOverScreen: {fileID: 1023750896}
   gameOverSound: {fileID: 8300000, guid: f0fedd9a2b6196f4aab00f76d5e9d72e, type: 3}
   pauseScreen: {fileID: 2069359901}
@@ -47058,11 +47059,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4325693977588721260, guid: 8ddcf03d580382d4982cd67acdf22db2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -81.39
+      value: -6.4
       objectReference: {fileID: 0}
     - target: {fileID: 4325693977588721260, guid: 8ddcf03d580382d4982cd67acdf22db2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.24
+      value: -0.82
       objectReference: {fileID: 0}
     - target: {fileID: 4325693977588721260, guid: 8ddcf03d580382d4982cd67acdf22db2, type: 3}
       propertyPath: m_LocalPosition.z
