@@ -28,18 +28,6 @@ public class Door : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            // Encontra o CoinManager na cena
-            CoinManager coinManager = FindObjectOfType<CoinManager>();
-            if (coinManager != null)
-            {
-                // Salva o número de moedas antes de mudar de cena
-                PlayerPrefs.SetInt("CoinCount", coinManager.coinCount);
-                PlayerPrefs.Save();
-            }
-
-            // Carrega a próxima cena no índice
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
             if (collision.transform.position.x < transform.position.x)
             {
                 cam.MoveToNewRoom(nextRoom);
