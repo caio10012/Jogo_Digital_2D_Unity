@@ -20,7 +20,7 @@ public class CoinManager : MonoBehaviour
     void Update()
     {
         UpdateCoinText();
-        if (coinCount == 10 && !bridgeDestroyed)
+        if (coinCount == 13 && !bridgeDestroyed)
         {
             bridgeDestroyed = true;
             Destroy(bridge);
