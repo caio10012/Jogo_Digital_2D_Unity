@@ -9,6 +9,10 @@ TagManager:
   - Enemy
   - Checkpoint
   - Coin
+  - Menu
+  - GemPink
+  - GemGreen
+  - GemBrown
   layers:
   - Default
   - TransparentFX

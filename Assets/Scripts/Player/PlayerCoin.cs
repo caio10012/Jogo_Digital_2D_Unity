@@ -22,5 +22,20 @@ public class PlayerCoin : MonoBehaviour
             Destroy(other.gameObject);
             cm.coinCount++;
         }
+        if (other.gameObject.CompareTag("GemPink"))
+        {
+            Destroy(other.gameObject);
+            cm.coinCount += 2;
+        }
+        if (other.gameObject.CompareTag("GemGreen"))
+        {
+            Destroy(other.gameObject);
+            cm.coinCount += 3;
+        }
+        if (other.gameObject.CompareTag("GemBrown"))
+        {
+            Destroy(other.gameObject);
+            cm.coinCount += 4;
+        }
     }
 }
