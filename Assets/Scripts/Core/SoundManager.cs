@@ -47,7 +47,7 @@ public class SoundManager : MonoBehaviour
     public void ChangeMusicVolume(float _change)
     {
 
-        ChangeSourceVolume(0.3f, "music_Volume", _change, musicSource);
+        ChangeSourceVolume(0.3f, "musicVolume", _change, musicSource);
     }
     private void ChangeSourceVolume(float baseVolume, string volumeName, float change, AudioSource source1)
     {

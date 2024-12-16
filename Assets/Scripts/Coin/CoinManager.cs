@@ -7,6 +7,8 @@ public class CoinManager : MonoBehaviour
     public Text coinText;
     public GameObject bridge;
     private bool bridgeDestroyed = false;
+    public GameObject bridge2;
+    private bool bridgeDestroyed2 = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,6 +26,11 @@ public class CoinManager : MonoBehaviour
         {
             bridgeDestroyed = true;
             Destroy(bridge);
+        }
+        if (coinCount >= 7 && !bridgeDestroyed2)
+        {
+            bridgeDestroyed2 = true;
+            Destroy(bridge2);
         }
     }
 
