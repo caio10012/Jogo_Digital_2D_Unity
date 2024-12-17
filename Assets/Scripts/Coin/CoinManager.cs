@@ -27,7 +27,7 @@ public class CoinManager : MonoBehaviour
             bridgeDestroyed = true;
             Destroy(bridge);
         }
-        if (coinCount >= 7 && !bridgeDestroyed2)
+        if (coinCount >= 15 && !bridgeDestroyed2)
         {
             bridgeDestroyed2 = true;
             Destroy(bridge2);
